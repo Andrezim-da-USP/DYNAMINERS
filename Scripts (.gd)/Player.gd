@@ -3,29 +3,48 @@ extends EntityBase
 class_name Player
 
 var direction:Vector2
-var last_direction: Vector2
+var last_direction:Vector2
 var idle:bool = true
-var movingVertically: bool
+var isAlive:bool = true
+var movingVertically:bool
+var estaAtacando:bool = false
 var estaProtegidoDoGas:bool = false
+#var bomba:Bomba
+
+const TIME_GAS_MASK:int = 15
 const BOMBA = preload("res://Scenes (.tscn)/Bomba.tscn")
 
-onready var timerMascara = $Timer_Mascara
-onready var label = $Label
+onready var timerMascara = $Timer_Mascara as Timer
+onready var label = $VBoxContainer/Label as Label
+onready var textureProgress = $TextureProgress as TextureProgress
+onready var animationFadeGasMask = $VBoxContainer/HBoxContainer/AnimationPlayer
+onready var hBoxContainerGasMask = $VBoxContainer/HBoxContainer
+onready var labelGasMask = $VBoxContainer/HBoxContainer/Label
+onready var damageAnimation = $DamageRect/AnimationPlayer
+onready var hitboxR = $HITBOX/RIGHT 
+onready var hitboxL = $HITBOX/LEFT 
+onready var hitboxU = $HITBOX/UP 
+onready var hitboxD = $HITBOX/DOWN 
 
 signal vida_mudou(variacao)
 signal alterou_qtd_bomba(variacao)
 signal coletou_moeda()
 signal coletou_mascara_de_gas()
+signal acabou_mascara_de_gas()
 
 func _ready():
-	set_hp(30)
-
+	set_max_hp(50)
+	set_hp(20)
+	textureProgress.set_max(max_hp)
+	textureProgress.set_value(hp)
+	
 func _physics_process(delta):
-	set_direction()
+	if !estaAtacando:
+		set_direction()
 	movement(direction)
 	animation(direction, last_direction, idle)
 	put_bomb(self.global_position, last_direction)
-	
+	attack(last_direction)
 	velocity = move_and_slide(velocity)
 	
 func set_direction() -> void:
@@ -50,7 +69,7 @@ func set_direction() -> void:
 		pass	
 
 func movement(dir:Vector2) -> void:
-	if !idle:
+	if !idle and !estaAtacando and isAlive:
 		velocity = speed*dir
 		last_direction = dir
 	else:
@@ -58,7 +77,7 @@ func movement(dir:Vector2) -> void:
 	pass
 	
 func animation(dir:Vector2, last_dir:Vector2, parado:bool) -> void:
-	if !parado:
+	if !parado and !estaAtacando and isAlive:
 		if dir == Vector2.UP:
 			anim.play("runBack")
 		elif dir == Vector2.DOWN:
@@ -69,7 +88,7 @@ func animation(dir:Vector2, last_dir:Vector2, parado:bool) -> void:
 		elif dir == Vector2.LEFT:
 			anim.play("runSide")
 			anim.flip_h = false
-	elif parado:
+	elif parado and !estaAtacando and isAlive:
 		if last_dir == Vector2.DOWN:
 			anim.play("idleFront")
 		elif last_dir == Vector2.UP:
@@ -82,16 +101,73 @@ func animation(dir:Vector2, last_dir:Vector2, parado:bool) -> void:
 			anim.flip_h = false
 
 func put_bomb(pos: Vector2, dir: Vector2) -> void:
-	if Input.is_action_just_pressed("ui_accept") and qtdBomba > 0:
-		var incremento = dir * 60
-		var bomba = BOMBA.instance()
-		get_parent().add_child(bomba)
-		bomba.global_position = pos + incremento
+	if Input.is_action_just_pressed("ui_accept") and qtdBomba  > 0 and isAlive:
+		var incremento:Vector2 = dir * 60
+		var bombaInst = BOMBA.instance()
+		get_parent().add_child(bombaInst)
+		bombaInst.global_position = pos + incremento
 		emit_signal("alterou_qtd_bomba",-1)
 	pass
+	
+func attack(dir:Vector2) -> void:
+	if Input.is_action_just_pressed("click") and estaAtacando == false and isAlive:
+		estaAtacando = true
+		match dir:
+			Vector2.RIGHT:
+				anim.flip_h = false
+				anim.play("attack.R")
+				yield(anim,"animation_finished")
+				estaAtacando = false
+			Vector2.LEFT:
+				anim.flip_h = false
+				anim.play("attack.L")
+				yield(anim,"animation_finished")
+				estaAtacando = false
+			Vector2.DOWN: 
+				anim.flip_h = false
+				anim.play("attack.D")
+				yield(anim,"animation_finished")
+				estaAtacando = false
+			Vector2.UP:
+				anim.flip_h = false
+				anim.play("attack.U")
+				yield(anim,"animation_finished")
+				estaAtacando = false
+	else:
+		pass
 
+func death() -> void:
+	var new_scale:Vector2 = Vector2(1.75,1.75)
+	isAlive = false
+	collShape.set_disabled(true)
+	anim.set_flip_h(false)
+	match last_direction:
+		Vector2.UP:
+			anim.play("death.U")
+			yield(anim,"animation_finished")
+			get_tree().reload_current_scene()
+		Vector2.DOWN:
+			anim.play("death.D")
+			yield(anim,"animation_finished")
+			get_tree().reload_current_scene()
+		Vector2.LEFT:
+			anim.set_scale(new_scale)
+			anim.play("death.L")
+			yield(anim,"animation_finished")
+			get_tree().reload_current_scene()
+		Vector2.RIGHT:
+			anim.set_scale(new_scale)
+			anim.play("death.R")
+			yield(anim,"animation_finished")
+			get_tree().reload_current_scene()
+	
 func _on_Player_vida_mudou(variacao) -> void:
-	set_hp(hp + variacao)
+	set_hp(self.hp + variacao)
+	textureProgress.set_value(self.hp)
+	if variacao < 0:
+		damageAnimation.play("Damage")
+		if hp <= 0:
+			self.death()
 	pass # Replace with function body.
 
 func _on_Player_coletou_moeda():
@@ -106,8 +182,57 @@ func _on_Player_alterou_qtd_bomba(variacao):
 func _on_Player_coletou_mascara_de_gas():
 	estaProtegidoDoGas = true
 	timerMascara.start()
+	hBoxContainerGasMask.set_visible(true)
+	labelGasMask.set_text(str(int(TIME_GAS_MASK)))
 	pass # Replace with function body.
 
 func _on_Timer_Mascara_timeout():
-	estaProtegidoDoGas = false
+	if (TIME_GAS_MASK - int(labelGasMask.get_text()) == 15) and hBoxContainerGasMask.is_visible():
+		estaProtegidoDoGas = false
+		hBoxContainerGasMask.set_visible(false)
+		emit_signal("acabou_mascara_de_gas")
+	else: #TIME_GAS_MASK - int(labelGasMask.get_text()) > 0:
+		labelGasMask.set_text(str(int(labelGasMask.get_text())-1))
+		timerMascara.start()
+	pass # Replace with function body.
+
+func _on_AnimatedSprite_frame_changed():
+	if estaAtacando == true:
+		match last_direction:
+			Vector2.UP:
+				if anim.frame == 5:
+					hitboxU.disabled = false
+				elif anim.frame == 7:
+					hitboxU.disabled = true
+			Vector2.DOWN:
+				if anim.frame == 5:
+					hitboxD.disabled = false
+				elif anim.frame == 7:
+					hitboxD.disabled = true
+			Vector2.RIGHT:
+				if anim.frame == 5:
+					hitboxR.disabled = false
+				elif anim.frame == 7:
+					hitboxR.disabled = true
+			Vector2.LEFT:
+				if anim.frame == 5:
+					hitboxL.disabled = false
+				elif anim.frame == 7:
+					hitboxL.disabled = true
+	pass # Replace with function body.
+
+func _on_HITBOX_area_entered(area):
+	if area.is_in_group("destrutivel"):
+		area.get_parent().emit_signal("vida_mudou", $HITBOX.dano)
+
+func _on_HBoxContainer_visibility_changed():
+	if hBoxContainerGasMask.is_visible():
+		animationFadeGasMask.play("Fade")
+	else:
+		animationFadeGasMask.stop()
+	pass # Replace with function body.
+
+func _on_Player_acabou_mascara_de_gas():
+	collShape.set_disabled(true)
+	collShape.set_disabled(false)
 	pass # Replace with function body.

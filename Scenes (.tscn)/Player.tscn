@@ -1,16 +1,25 @@
-[gd_scene load_steps=71 format=2]
+[gd_scene load_steps=206 format=2]
 
 [ext_resource path="res://Assets/Run back NOVO/0002.png" type="Texture" id=1]
+[ext_resource path="res://Scenes (.tscn)/HITBOX.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes (.tscn)/HURTBOX.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/Mining down/0001.png" type="Texture" id=4]
 [ext_resource path="res://Assets/Run back NOVO/0006.png" type="Texture" id=5]
 [ext_resource path="res://Assets/Run back NOVO/0008.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Mining down/0005.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Run back NOVO/0009.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Mining down/0006.png" type="Texture" id=9]
 [ext_resource path="res://Assets/Run back NOVO/0010.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Mining down/0007.png" type="Texture" id=11]
 [ext_resource path="res://Assets/Run back NOVO/0011.png" type="Texture" id=12]
 [ext_resource path="res://Assets/Run back NOVO/0001.png" type="Texture" id=13]
 [ext_resource path="res://Assets/Run back NOVO/0012.png" type="Texture" id=14]
 [ext_resource path="res://Assets/Run back NOVO/0007.png" type="Texture" id=15]
+[ext_resource path="res://Assets/Mining down/0008.png" type="Texture" id=16]
+[ext_resource path="res://Assets/Mining down/0000.png" type="Texture" id=17]
 [ext_resource path="res://Assets/Run back NOVO/0003.png" type="Texture" id=18]
 [ext_resource path="res://Assets/Run back NOVO/0005.png" type="Texture" id=19]
+[ext_resource path="res://Assets/Mining down/0004.png" type="Texture" id=20]
 [ext_resource path="res://Assets/Run back NOVO/0004.png" type="Texture" id=21]
 [ext_resource path="res://Assets/Idle side/0005.png" type="Texture" id=22]
 [ext_resource path="res://Assets/Run front NOVO/0002.png" type="Texture" id=23]
@@ -19,10 +28,13 @@
 [ext_resource path="res://Assets/Run front NOVO/0001.png" type="Texture" id=26]
 [ext_resource path="res://Assets/Run front NOVO/0003.png" type="Texture" id=27]
 [ext_resource path="res://Assets/Run back NOVO/0014.png" type="Texture" id=28]
+[ext_resource path="res://Assets/Mining down/0010.png" type="Texture" id=29]
 [ext_resource path="res://Assets/Run side NOVO/0008.png" type="Texture" id=30]
 [ext_resource path="res://Assets/Run front NOVO/0015.png" type="Texture" id=31]
+[ext_resource path="res://Assets/Mining down/0009.png" type="Texture" id=32]
 [ext_resource path="res://Assets/Run front NOVO/0014.png" type="Texture" id=33]
 [ext_resource path="res://Assets/Run side NOVO/0003.png" type="Texture" id=34]
+[ext_resource path="res://Assets/Mining down/0002.png" type="Texture" id=35]
 [ext_resource path="res://Assets/Run side NOVO/0006.png" type="Texture" id=36]
 [ext_resource path="res://Assets/Idle side/0003.png" type="Texture" id=37]
 [ext_resource path="res://Assets/Run front NOVO/0013.png" type="Texture" id=38]
@@ -37,12 +49,16 @@
 [ext_resource path="res://Assets/Run front NOVO/0007.png" type="Texture" id=47]
 [ext_resource path="res://Assets/Run side NOVO/0010.png" type="Texture" id=48]
 [ext_resource path="res://Assets/Run side NOVO/0004.png" type="Texture" id=49]
+[ext_resource path="res://Assets/Mining down/0003.png" type="Texture" id=50]
 [ext_resource path="res://Assets/Run side NOVO/0014.png" type="Texture" id=51]
 [ext_resource path="res://Assets/Run front NOVO/0004.png" type="Texture" id=52]
 [ext_resource path="res://Assets/Run side NOVO/0009.png" type="Texture" id=53]
 [ext_resource path="res://Assets/Idle side/0004.png" type="Texture" id=54]
 [ext_resource path="res://Assets/Run front NOVO/0005.png" type="Texture" id=55]
 [ext_resource path="res://Assets/Run front NOVO/0006.png" type="Texture" id=56]
+[ext_resource path="res://Assets/Mining up/0003.png" type="Texture" id=57]
+[ext_resource path="res://Assets/Mining up/0005.png" type="Texture" id=58]
+[ext_resource path="res://Assets/Mining left/0006.png" type="Texture" id=59]
 [ext_resource path="res://Assets/Run side NOVO/0005.png" type="Texture" id=60]
 [ext_resource path="res://Assets/Idle side/0007.png" type="Texture" id=61]
 [ext_resource path="res://Assets/Run side NOVO/0015.png" type="Texture" id=62]
@@ -50,35 +66,140 @@
 [ext_resource path="res://Assets/Run side NOVO/0001.png" type="Texture" id=64]
 [ext_resource path="res://Assets/Run side NOVO/0012.png" type="Texture" id=65]
 [ext_resource path="res://Assets/Run side NOVO/0013.png" type="Texture" id=66]
+[ext_resource path="res://Assets/Mining left/0007.png" type="Texture" id=67]
+[ext_resource path="res://Assets/Mining right/0004.png" type="Texture" id=68]
+[ext_resource path="res://Assets/Mining up/0006.png" type="Texture" id=69]
+[ext_resource path="res://Assets/Mining up/0007.png" type="Texture" id=70]
+[ext_resource path="res://Assets/Mining right/0000.png" type="Texture" id=71]
+[ext_resource path="res://Assets/Mining left/0003.png" type="Texture" id=72]
+[ext_resource path="res://Assets/Mining left/0011.png" type="Texture" id=73]
+[ext_resource path="res://Assets/Mining right/0003.png" type="Texture" id=74]
+[ext_resource path="res://Assets/Mining left/0008.png" type="Texture" id=75]
+[ext_resource path="res://Assets/Mining left/0010.png" type="Texture" id=76]
+[ext_resource path="res://Assets/Mining right/0007.png" type="Texture" id=77]
+[ext_resource path="res://Assets/Mining right/0009.png" type="Texture" id=78]
+[ext_resource path="res://Assets/Mining up/0002.png" type="Texture" id=79]
+[ext_resource path="res://Assets/Mining up/0004.png" type="Texture" id=80]
+[ext_resource path="res://Assets/Mining up/0008.png" type="Texture" id=81]
+[ext_resource path="res://Assets/Mining right/0008.png" type="Texture" id=82]
+[ext_resource path="res://Assets/Mining up/0009.png" type="Texture" id=83]
+[ext_resource path="res://Assets/Mining right/0005.png" type="Texture" id=84]
+[ext_resource path="res://Assets/Mining left/0004.png" type="Texture" id=85]
+[ext_resource path="res://Assets/Mining down/0011.png" type="Texture" id=86]
+[ext_resource path="res://Assets/Mining right/0002.png" type="Texture" id=87]
+[ext_resource path="res://Assets/Mining left/0002.png" type="Texture" id=88]
+[ext_resource path="res://Assets/Mining left/0005.png" type="Texture" id=89]
+[ext_resource path="res://Assets/Mining left/0009.png" type="Texture" id=90]
+[ext_resource path="res://Assets/Mining right/0011.png" type="Texture" id=91]
+[ext_resource path="res://Assets/Mining left/0001.png" type="Texture" id=92]
+[ext_resource path="res://Assets/Mining right/0001.png" type="Texture" id=93]
 [ext_resource path="res://Scenes (.tscn)/EntityBase.tscn" type="PackedScene" id=94]
 [ext_resource path="res://Scripts (.gd)/Player.gd" type="Script" id=95]
+[ext_resource path="res://Assets/Mining up/0001.png" type="Texture" id=96]
+[ext_resource path="res://Assets/Mining left/0000.png" type="Texture" id=97]
+[ext_resource path="res://Assets/Mining right/0010.png" type="Texture" id=98]
+[ext_resource path="res://Assets/Mining up/0000.png" type="Texture" id=99]
+[ext_resource path="res://Assets/Mining right/0006.png" type="Texture" id=100]
+[ext_resource path="res://Assets/Mining up/0010.png" type="Texture" id=101]
 [ext_resource path="res://Assets/Idle front/0005.png" type="Texture" id=102]
 [ext_resource path="res://Assets/Idle front/0006.png" type="Texture" id=103]
+[ext_resource path="res://Assets/Mining up/0011.png" type="Texture" id=104]
+[ext_resource path="res://Assets/preenchimento.png" type="Texture" id=105]
 [ext_resource path="res://Assets/Idle back/0001.png" type="Texture" id=106]
 [ext_resource path="res://Assets/Idle back/0007.png" type="Texture" id=107]
 [ext_resource path="res://Assets/Idle back/0005.png" type="Texture" id=108]
 [ext_resource path="res://Assets/Idle back/0006.png" type="Texture" id=109]
+[ext_resource path="res://Assets/borda.png" type="Texture" id=110]
+[ext_resource path="res://PressStart2P-Regular.ttf" type="DynamicFontData" id=111]
 [ext_resource path="res://Assets/Idle back/0003.png" type="Texture" id=112]
+[ext_resource path="res://Assets/gas_mask.png" type="Texture" id=113]
+[ext_resource path="res://Assets/Death/Left/0056.png" type="Texture" id=114]
+[ext_resource path="res://Assets/Death/Left/0001.png" type="Texture" id=115]
 [ext_resource path="res://Assets/Idle front/0001.png" type="Texture" id=116]
 [ext_resource path="res://Assets/Idle front/0002.png" type="Texture" id=117]
+[ext_resource path="res://Assets/Death/Left/0011.png" type="Texture" id=118]
 [ext_resource path="res://Assets/Idle back/0004.png" type="Texture" id=119]
+[ext_resource path="res://Assets/Death/Left/0026.png" type="Texture" id=120]
 [ext_resource path="res://Assets/Idle front/0003.png" type="Texture" id=121]
+[ext_resource path="res://Assets/Death/Left/0031.png" type="Texture" id=122]
+[ext_resource path="res://Assets/Death/Down/0076.png" type="Texture" id=123]
+[ext_resource path="res://Assets/Death/Left/0041.png" type="Texture" id=124]
+[ext_resource path="res://Assets/Death/Left/0046.png" type="Texture" id=125]
+[ext_resource path="res://Assets/Death/Left/0051.png" type="Texture" id=126]
+[ext_resource path="res://Assets/Death/Down/0086.png" type="Texture" id=127]
 [ext_resource path="res://Assets/Idle front/0004.png" type="Texture" id=128]
+[ext_resource path="res://Assets/Death/Down/0081.png" type="Texture" id=129]
+[ext_resource path="res://Assets/Death/Left/0006.png" type="Texture" id=130]
+[ext_resource path="res://Assets/Death/Left/0016.png" type="Texture" id=131]
+[ext_resource path="res://Assets/Death/Left/0021.png" type="Texture" id=132]
+[ext_resource path="res://Assets/Death/Left/0036.png" type="Texture" id=133]
+[ext_resource path="res://Assets/Death/Down/0016.png" type="Texture" id=134]
+[ext_resource path="res://Assets/Death/Down/0026.png" type="Texture" id=135]
+[ext_resource path="res://Assets/Death/Down/0036.png" type="Texture" id=136]
+[ext_resource path="res://Assets/Death/Down/0046.png" type="Texture" id=137]
+[ext_resource path="res://Assets/Death/Down/0056.png" type="Texture" id=138]
 [ext_resource path="res://Assets/Idle front/0007.png" type="Texture" id=139]
 [ext_resource path="res://Assets/Idle back/0002.png" type="Texture" id=140]
+[ext_resource path="res://Assets/Death/Down/0031.png" type="Texture" id=141]
+[ext_resource path="res://Assets/Death/Down/0066.png" type="Texture" id=142]
+[ext_resource path="res://Assets/Death/Down/0021.png" type="Texture" id=143]
+[ext_resource path="res://Assets/Death/Down/0051.png" type="Texture" id=144]
 [ext_resource path="res://Assets/Idle side/0001.png" type="Texture" id=145]
 [ext_resource path="res://Assets/Idle side/0002.png" type="Texture" id=146]
+[ext_resource path="res://Assets/Death/Down/0041.png" type="Texture" id=147]
+[ext_resource path="res://Assets/Death/Down/0061.png" type="Texture" id=148]
+[ext_resource path="res://Assets/Death/Down/0071.png" type="Texture" id=149]
+[ext_resource path="res://Assets/Death/Down/0006.png" type="Texture" id=150]
+[ext_resource path="res://Assets/Death/Down/0011.png" type="Texture" id=151]
+[ext_resource path="res://Assets/Death/Down/0001.png" type="Texture" id=152]
+[ext_resource path="res://Assets/Death/Right/0081.png" type="Texture" id=153]
+[ext_resource path="res://Assets/Death/Left/0076.png" type="Texture" id=154]
+[ext_resource path="res://Assets/Death/Up/0011.png" type="Texture" id=155]
+[ext_resource path="res://Assets/Death/Left/0061.png" type="Texture" id=156]
+[ext_resource path="res://Assets/Death/Right/0011.png" type="Texture" id=157]
+[ext_resource path="res://Assets/Death/Up/0076.png" type="Texture" id=158]
+[ext_resource path="res://Assets/Death/Up/0046.png" type="Texture" id=159]
+[ext_resource path="res://Assets/Death/Up/0061.png" type="Texture" id=160]
+[ext_resource path="res://Assets/Death/Up/0036.png" type="Texture" id=161]
+[ext_resource path="res://Assets/Death/Left/0066.png" type="Texture" id=162]
+[ext_resource path="res://Assets/Death/Right/0076.png" type="Texture" id=163]
+[ext_resource path="res://Assets/Death/Up/0021.png" type="Texture" id=164]
+[ext_resource path="res://Assets/Death/Up/0051.png" type="Texture" id=165]
+[ext_resource path="res://Assets/Death/Right/0046.png" type="Texture" id=166]
+[ext_resource path="res://Assets/Death/Up/0031.png" type="Texture" id=167]
+[ext_resource path="res://Assets/Death/Up/0041.png" type="Texture" id=168]
+[ext_resource path="res://Assets/Death/Left/0086.png" type="Texture" id=169]
+[ext_resource path="res://Assets/Death/Up/0056.png" type="Texture" id=170]
+[ext_resource path="res://Assets/Death/Right/0016.png" type="Texture" id=171]
+[ext_resource path="res://Assets/Death/Left/0071.png" type="Texture" id=172]
+[ext_resource path="res://Assets/Death/Right/0036.png" type="Texture" id=173]
+[ext_resource path="res://Assets/Death/Up/0006.png" type="Texture" id=174]
+[ext_resource path="res://Assets/Death/Right/0006.png" type="Texture" id=175]
+[ext_resource path="res://Assets/Death/Right/0066.png" type="Texture" id=176]
+[ext_resource path="res://Assets/Death/Up/0001.png" type="Texture" id=177]
+[ext_resource path="res://Assets/Death/Right/0061.png" type="Texture" id=178]
+[ext_resource path="res://Assets/Death/Right/0086.png" type="Texture" id=179]
+[ext_resource path="res://Assets/Death/Up/0066.png" type="Texture" id=180]
+[ext_resource path="res://Assets/Death/Up/0086.png" type="Texture" id=181]
+[ext_resource path="res://Assets/Death/Right/0021.png" type="Texture" id=182]
+[ext_resource path="res://Assets/Death/Right/0031.png" type="Texture" id=183]
+[ext_resource path="res://Assets/Death/Left/0081.png" type="Texture" id=184]
+[ext_resource path="res://Assets/Death/Right/0026.png" type="Texture" id=185]
+[ext_resource path="res://Assets/Death/Right/0041.png" type="Texture" id=186]
+[ext_resource path="res://Assets/Death/Right/0001.png" type="Texture" id=187]
+[ext_resource path="res://Assets/Death/Up/0016.png" type="Texture" id=188]
+[ext_resource path="res://Assets/Death/Up/0026.png" type="Texture" id=189]
+[ext_resource path="res://Assets/Death/Up/0071.png" type="Texture" id=190]
+[ext_resource path="res://Assets/Death/Right/0051.png" type="Texture" id=191]
+[ext_resource path="res://Assets/Death/Right/0056.png" type="Texture" id=192]
+[ext_resource path="res://Assets/Death/Right/0071.png" type="Texture" id=193]
+[ext_resource path="res://Assets/Death/Up/0081.png" type="Texture" id=194]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 145 ), ExtResource( 146 ), ExtResource( 37 ), ExtResource( 54 ), ExtResource( 22 ), ExtResource( 39 ), ExtResource( 61 ) ],
+"frames": [ ExtResource( 26 ), ExtResource( 23 ), ExtResource( 27 ), ExtResource( 52 ), ExtResource( 55 ), ExtResource( 56 ), ExtResource( 47 ), ExtResource( 45 ), ExtResource( 63 ), ExtResource( 43 ), ExtResource( 40 ), ExtResource( 46 ), ExtResource( 38 ), ExtResource( 33 ), ExtResource( 31 ) ],
 "loop": true,
-"name": "idleSide",
-"speed": 2.0
-}, {
-"frames": [ ExtResource( 13 ), ExtResource( 1 ), ExtResource( 18 ), ExtResource( 21 ), ExtResource( 19 ), ExtResource( 5 ), ExtResource( 15 ), ExtResource( 6 ), ExtResource( 8 ), ExtResource( 10 ), ExtResource( 12 ), ExtResource( 14 ), ExtResource( 24 ), ExtResource( 28 ), ExtResource( 25 ) ],
-"loop": true,
-"name": "runBack",
+"name": "runFront",
 "speed": 30.0
 }, {
 "frames": [ ExtResource( 116 ), ExtResource( 117 ), ExtResource( 121 ), ExtResource( 128 ), ExtResource( 102 ), ExtResource( 103 ), ExtResource( 139 ) ],
@@ -86,9 +207,29 @@ animations = [ {
 "name": "idleFront",
 "speed": 2.0
 }, {
-"frames": [ ExtResource( 26 ), ExtResource( 23 ), ExtResource( 27 ), ExtResource( 52 ), ExtResource( 55 ), ExtResource( 56 ), ExtResource( 47 ), ExtResource( 45 ), ExtResource( 63 ), ExtResource( 43 ), ExtResource( 40 ), ExtResource( 46 ), ExtResource( 38 ), ExtResource( 33 ), ExtResource( 31 ) ],
+"frames": [ ExtResource( 71 ), ExtResource( 93 ), ExtResource( 87 ), ExtResource( 74 ), ExtResource( 68 ), ExtResource( 84 ), ExtResource( 100 ), ExtResource( 77 ), ExtResource( 82 ), ExtResource( 78 ), ExtResource( 98 ), ExtResource( 91 ) ],
 "loop": true,
-"name": "runFront",
+"name": "attack.R",
+"speed": 20.0
+}, {
+"frames": [ ExtResource( 97 ), ExtResource( 92 ), ExtResource( 88 ), ExtResource( 72 ), ExtResource( 85 ), ExtResource( 89 ), ExtResource( 59 ), ExtResource( 67 ), ExtResource( 75 ), ExtResource( 90 ), ExtResource( 76 ), ExtResource( 73 ) ],
+"loop": true,
+"name": "attack.L",
+"speed": 20.0
+}, {
+"frames": [ ExtResource( 152 ), ExtResource( 150 ), ExtResource( 151 ), ExtResource( 134 ), ExtResource( 143 ), ExtResource( 135 ), ExtResource( 141 ), ExtResource( 136 ), ExtResource( 147 ), ExtResource( 137 ), ExtResource( 144 ), ExtResource( 138 ), ExtResource( 148 ), ExtResource( 142 ), ExtResource( 149 ), ExtResource( 123 ), ExtResource( 129 ), ExtResource( 127 ) ],
+"loop": true,
+"name": "death.D",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 187 ), ExtResource( 175 ), ExtResource( 157 ), ExtResource( 171 ), ExtResource( 182 ), ExtResource( 185 ), ExtResource( 183 ), ExtResource( 173 ), ExtResource( 186 ), ExtResource( 166 ), ExtResource( 191 ), ExtResource( 192 ), ExtResource( 178 ), ExtResource( 176 ), ExtResource( 193 ), ExtResource( 163 ), ExtResource( 153 ), ExtResource( 179 ) ],
+"loop": true,
+"name": "death.R",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 64 ), ExtResource( 42 ), ExtResource( 34 ), ExtResource( 49 ), ExtResource( 60 ), ExtResource( 36 ), ExtResource( 41 ), ExtResource( 30 ), ExtResource( 53 ), ExtResource( 48 ), ExtResource( 44 ), ExtResource( 65 ), ExtResource( 66 ), ExtResource( 51 ), ExtResource( 62 ) ],
+"loop": true,
+"name": "runSide",
 "speed": 30.0
 }, {
 "frames": [ ExtResource( 106 ), ExtResource( 140 ), ExtResource( 112 ), ExtResource( 119 ), ExtResource( 108 ), ExtResource( 109 ), ExtResource( 107 ) ],
@@ -96,45 +237,240 @@ animations = [ {
 "name": "idleBack",
 "speed": 2.0
 }, {
-"frames": [ ExtResource( 64 ), ExtResource( 42 ), ExtResource( 34 ), ExtResource( 49 ), ExtResource( 60 ), ExtResource( 36 ), ExtResource( 41 ), ExtResource( 30 ), ExtResource( 53 ), ExtResource( 48 ), ExtResource( 44 ), ExtResource( 65 ), ExtResource( 66 ), ExtResource( 51 ), ExtResource( 62 ) ],
+"frames": [ ExtResource( 17 ), ExtResource( 4 ), ExtResource( 35 ), ExtResource( 50 ), ExtResource( 20 ), ExtResource( 7 ), ExtResource( 9 ), ExtResource( 11 ), ExtResource( 16 ), ExtResource( 32 ), ExtResource( 29 ), ExtResource( 86 ) ],
 "loop": true,
-"name": "runSide",
+"name": "attack.D",
+"speed": 20.0
+}, {
+"frames": [ ExtResource( 99 ), ExtResource( 96 ), ExtResource( 79 ), ExtResource( 57 ), ExtResource( 80 ), ExtResource( 58 ), ExtResource( 69 ), ExtResource( 70 ), ExtResource( 81 ), ExtResource( 83 ), ExtResource( 101 ), ExtResource( 104 ) ],
+"loop": true,
+"name": "attack.U",
+"speed": 20.0
+}, {
+"frames": [ ExtResource( 115 ), ExtResource( 130 ), ExtResource( 118 ), ExtResource( 131 ), ExtResource( 132 ), ExtResource( 120 ), ExtResource( 122 ), ExtResource( 133 ), ExtResource( 124 ), ExtResource( 125 ), ExtResource( 126 ), ExtResource( 114 ), ExtResource( 156 ), ExtResource( 162 ), ExtResource( 172 ), ExtResource( 154 ), ExtResource( 184 ), ExtResource( 169 ) ],
+"loop": true,
+"name": "death.L",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 145 ), ExtResource( 146 ), ExtResource( 37 ), ExtResource( 54 ), ExtResource( 22 ), ExtResource( 39 ), ExtResource( 61 ) ],
+"loop": true,
+"name": "idleSide",
+"speed": 2.0
+}, {
+"frames": [ ExtResource( 177 ), ExtResource( 174 ), ExtResource( 155 ), ExtResource( 188 ), ExtResource( 164 ), ExtResource( 189 ), ExtResource( 167 ), ExtResource( 161 ), ExtResource( 168 ), ExtResource( 159 ), ExtResource( 165 ), ExtResource( 170 ), ExtResource( 160 ), ExtResource( 180 ), ExtResource( 190 ), ExtResource( 158 ), ExtResource( 194 ), ExtResource( 181 ) ],
+"loop": true,
+"name": "death.U",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 13 ), ExtResource( 1 ), ExtResource( 18 ), ExtResource( 21 ), ExtResource( 19 ), ExtResource( 5 ), ExtResource( 15 ), ExtResource( 6 ), ExtResource( 8 ), ExtResource( 10 ), ExtResource( 12 ), ExtResource( 14 ), ExtResource( 24 ), ExtResource( 28 ), ExtResource( 25 ) ],
+"loop": true,
+"name": "runBack",
 "speed": 30.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 25.7097, 35.8464 )
+extents = Vector2( 21, 31.3751 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 19
+outline_size = 1
+outline_color = Color( 1, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 111 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 18
+outline_size = 1
+use_filter = true
+font_data = ExtResource( 111 )
+
+[sub_resource type="Animation" id=5]
+resource_name = "Fade"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1.7, 1, 1 ), Color( 1, 1.6, 1, 0.11 ), Color( 1, 1.7, 1, 1 ) ]
+}
+
+[sub_resource type="CapsuleShape2D" id=6]
+radius = 15.2169
+height = 32.8872
+
+[sub_resource type="CircleShape2D" id=7]
+radius = 17.7429
+
+[sub_resource type="CircleShape2D" id=8]
+radius = 15.9767
+
+[sub_resource type="CircleShape2D" id=9]
+radius = 13.6111
+
+[sub_resource type="CircleShape2D" id=10]
+radius = 15.2511
+
+[sub_resource type="Animation" id=11]
+resource_name = "Damage"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0.462745 ), Color( 1, 1, 1, 0 ) ]
+}
 
 [node name="Player" groups=[
 "Player",
 ] instance=ExtResource( 94 )]
+collision_layer = 2
+collision_mask = 13
 script = ExtResource( 95 )
 
 [node name="AnimatedSprite" parent="." index="0"]
+modulate = Color( 1.2, 1, 1.2, 1 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 1 )
 animation = "idleFront"
-frame = 3
+frame = 5
 playing = true
 
 [node name="CollisionShape2D" parent="." index="1"]
-position = Vector2( 0, -4.62493 )
+position = Vector2( -1, -0.62493 )
 shape = SubResource( 2 )
 
 [node name="Timer_Mascara" type="Timer" parent="." index="2"]
-wait_time = 20.0
 
-[node name="Label" type="Label" parent="." index="3"]
-margin_left = 263.399
-margin_top = -272.422
-margin_right = 317.399
-margin_bottom = -258.422
-text = "x0 Coins"
+[node name="VBoxContainer" type="VBoxContainer" parent="." index="3"]
+margin_left = 350.146
+margin_top = -269.8
+margin_right = 512.434
+margin_bottom = -166.8
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Label" type="Label" parent="VBoxContainer" index="0"]
+margin_right = 162.0
+margin_bottom = 19.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 1, 0.054902, 0.054902, 1 )
+custom_colors/font_color_shadow = Color( 0.65098, 0.65098, 0.65098, 1 )
+text = "x0 COINS"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" index="1"]
+visible = false
+margin_top = 23.0
+margin_right = 162.0
+margin_bottom = 103.0
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer" index="0"]
+modulate = Color( 1, 1.7, 1, 1 )
+margin_right = 80.0
+margin_bottom = 80.0
+texture = ExtResource( 113 )
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer" index="1"]
+margin_left = 84.0
+margin_top = 31.0
+margin_right = 84.0
+margin_bottom = 49.0
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 1, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0.705882, 0.682353, 0.682353, 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="VBoxContainer/HBoxContainer" index="2"]
+anims/Fade = SubResource( 5 )
+
+[node name="HURTBOX" parent="." index="4" instance=ExtResource( 3 )]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="HURTBOX" index="0"]
+modulate = Color( 0.290196, 1, 0.00392157, 1 )
+shape = SubResource( 6 )
+
+[node name="HITBOX" parent="." index="5" instance=ExtResource( 2 )]
+collision_layer = 2
+collision_mask = 4
+dano = 3
+
+[node name="LEFT" type="CollisionShape2D" parent="HITBOX" index="0"]
+modulate = Color( 1, 0, 0, 1 )
+position = Vector2( -39, -15 )
+shape = SubResource( 7 )
+disabled = true
+
+[node name="RIGHT" type="CollisionShape2D" parent="HITBOX" index="1"]
+modulate = Color( 1, 0, 0, 1 )
+position = Vector2( 39, 0 )
+shape = SubResource( 8 )
+disabled = true
+
+[node name="DOWN" type="CollisionShape2D" parent="HITBOX" index="2"]
+modulate = Color( 1, 0, 0, 1 )
+position = Vector2( -5, 36 )
+shape = SubResource( 9 )
+disabled = true
+
+[node name="UP" type="CollisionShape2D" parent="HITBOX" index="3"]
+modulate = Color( 1, 0, 0, 1 )
+position = Vector2( 11, -37 )
+shape = SubResource( 10 )
+disabled = true
+
+[node name="TextureProgress" type="TextureProgress" parent="." index="6"]
+margin_left = -45.0
+margin_top = -62.0
+margin_right = 42.0
+margin_bottom = -45.0
+value = 60.0
+texture_over = ExtResource( 110 )
+texture_progress = ExtResource( 105 )
+nine_patch_stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DamageRect" type="ColorRect" parent="." index="7"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = -512.0
+margin_top = -300.0
+margin_right = 512.0
+margin_bottom = 300.0
+color = Color( 0.752941, 0.0509804, 0.0509804, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="DamageRect" index="0"]
+anims/Damage = SubResource( 11 )
+[connection signal="acabou_mascara_de_gas" from="." to="." method="_on_Player_acabou_mascara_de_gas"]
 [connection signal="alterou_qtd_bomba" from="." to="." method="_on_Player_alterou_qtd_bomba"]
 [connection signal="coletou_mascara_de_gas" from="." to="." method="_on_Player_coletou_mascara_de_gas"]
 [connection signal="coletou_moeda" from="." to="." method="_on_Player_coletou_moeda"]
 [connection signal="vida_mudou" from="." to="." method="_on_Player_vida_mudou"]
+[connection signal="frame_changed" from="AnimatedSprite" to="." method="_on_AnimatedSprite_frame_changed"]
 [connection signal="timeout" from="Timer_Mascara" to="." method="_on_Timer_Mascara_timeout"]
+[connection signal="visibility_changed" from="VBoxContainer/HBoxContainer" to="." method="_on_HBoxContainer_visibility_changed"]
+[connection signal="area_entered" from="HITBOX" to="." method="_on_HITBOX_area_entered"]
+
+[editable path="HURTBOX"]
+
+[editable path="HITBOX"]

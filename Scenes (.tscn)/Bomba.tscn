@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Assets/Animação bomba/0005.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Animação bomba/0007.png" type="Texture" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Assets/Animação bomba/0006.png" type="Texture" id=8]
 [ext_resource path="res://Assets/Animação bomba/0002.png" type="Texture" id=9]
 [ext_resource path="res://Assets/Animação bomba/0003.png" type="Texture" id=10]
+[ext_resource path="res://Scripts (.gd)/Bomba.gd" type="Script" id=11]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -23,6 +24,9 @@ animations = [ {
 radius = 26.4989
 
 [node name="Bomba" type="KinematicBody2D"]
+collision_layer = 2
+collision_mask = 11
+script = ExtResource( 11 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 0.4, 0.4 )
