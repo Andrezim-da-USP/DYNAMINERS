@@ -13,12 +13,14 @@ var estaProtegidoDoGas:bool = false
 var layerIndex:int = 5
 #var bomba:Bomba
 
+const MAX_HP_INITIAL_VALUE = 50
+const HP_INITIAL_VALUE = 35
 const TIME_GAS_MASK:int = 15
 const BOMBA = preload("res://Scenes (.tscn)/Bomba.tscn")
 
 onready var timerMascara = $Timer_Mascara as Timer
 onready var canvasLayer:CanvasLayer = $GUI as CanvasLayer
-onready var label:Label = $GUI/VBoxContainer/Label as Label
+onready var coinsLabel:Label = $GUI/VBoxContainer/Label as Label
 onready var bombsLabel:Label = $GUI/VBoxContainer/Bombs as Label
 onready var vida:TextureProgress = $GUI/Vida as TextureProgress
 onready var vidaLabel:Label = $GUI/Vida/Label as Label
@@ -39,12 +41,26 @@ signal coletou_mascara_de_gas()
 signal acabou_mascara_de_gas()
 
 func _ready():
-	set_max_hp(Global.get_max_hp())
-	set_hp(Global.get_hp())
-	vida.set_max(Global.max_hp)
-	vida.set_value(Global.hp)
-	vidaLabel.set_text(str(Global.hp) + "/" + str(Global.max_hp))
-	bombsLabel.set_text("x" + str(qtdBomba) + " BOMBS")
+	var save_file:File = File.new()
+	if not save_file.file_exists("res://Save_Load_Data/game_data.json"): return
+	save_file.open("res://Save_Load_Data/game_data.json", File.READ)
+	if save_file.get_len() == 0:
+		set_max_hp(MAX_HP_INITIAL_VALUE)
+		set_hp(HP_INITIAL_VALUE)
+	else:
+		while save_file.get_position() < save_file.get_len():
+			var node_data:Dictionary = parse_json(save_file.get_line())
+			if node_data["filename"] == "res://Scenes (.tscn)/Player.tscn":
+				set_max_hp(node_data["max_hp"])
+				set_hp(node_data["hp"])
+				set_qtdBomba(node_data["qtd_bomba"])
+				set_qtdMoeda(node_data["qtd_moeda"])
+	save_file.close()
+	vida.set_max(get_max_hp())
+	vida.set_value(get_hp())
+	vidaLabel.set_text(str(get_hp()) + "/" + str(get_max_hp()))
+	coinsLabel.set_text("x" + str(get_qtdMoeda()) + " COINS")
+	bombsLabel.set_text("x" + str(get_qtdBomba()) + " BOMBS")
 	
 func _physics_process(delta):
 	if !estaAtacando: set_direction()
@@ -53,6 +69,19 @@ func _physics_process(delta):
 	put_bomb(self.global_position, last_direction)
 	attack(last_direction)
 	velocity = move_and_slide(velocity)
+	
+func save():
+	var data:Dictionary = {
+		"filename" : get_filename(),
+		"parent" : get_parent().get_path(),
+		"pos_x" : position.x,
+		"pos_y" : position.y,
+		"max_hp" : max_hp,
+		"hp" : hp,
+		"qtd_bomba" : qtdBomba,
+		"qtd_moeda" : qtdMoeda
+	}
+	return data
 	
 func set_direction() -> void:
 	if Input.is_action_just_pressed("ui_down"):
@@ -184,35 +213,36 @@ func death() -> void:
 		Vector2.UP:
 			anim.play("death.U")
 			yield(anim,"animation_finished")
-			get_tree().reload_current_scene()
+#			get_tree().reload_current_scene()
 		Vector2.DOWN:
 			anim.play("death.D")
 			yield(anim,"animation_finished")
-			get_tree().reload_current_scene()
+#			get_tree().reload_current_scene()
 		Vector2.LEFT:
 			anim.set_scale(new_scale)
 			anim.play("death.L")
 			yield(anim,"animation_finished")
-			get_tree().reload_current_scene()
+#			get_tree().reload_current_scene()
 		Vector2.RIGHT:
 			anim.set_scale(new_scale)
 			anim.play("death.R")
 			yield(anim,"animation_finished")
-			get_tree().reload_current_scene()
+#			get_tree().reload_current_scene()
+	get_tree().reload_current_scene()
 	
 func _on_Player_vida_mudou(variacao:int) -> void:
 #	var vida_texture:TextureProgress = get_parent().get_node("Camera/GUI/Vida")
 #	var damageAnimation:AnimationPlayer = get_parent().get_node("GUI/VBoxContainer/HBoxContainer/AnimationPlayer")
-	if Global.hp <= 0: return
-	Global.set_hp(Global.hp + variacao)
-	vida.set_value(Global.hp)
-	if Global.hp > 0:
-		vidaLabel.set_text(str(Global.hp) + "/" + str(Global.max_hp))
-	else: vidaLabel.set_text("0/" + str(Global.max_hp))
+	if hp <= 0: return
+	set_hp(hp + variacao)
+	vida.set_value(hp)
+	if hp > 0:
+		vidaLabel.set_text(str(hp) + "/" + str(max_hp))
+	else: vidaLabel.set_text("0/" + str(max_hp))
 	
 	if variacao < 0:
 		damageAnimation.play("Damage")
-		if Global.hp <= 0:
+		if hp <= 0:
 			self.death()
 	if variacao > 0:
 		vidaAnim.play("heal")
@@ -221,7 +251,7 @@ func _on_Player_vida_mudou(variacao:int) -> void:
 func _on_Player_coletou_moeda():
 #	var label_moeda:Label = get_parent().get_node("GUI/VBoxContainer/Label")
 	set_qtdMoeda(qtdMoeda+1)
-	label.set_text("x" + str(qtdMoeda) + " COINS")
+	coinsLabel.set_text("x" + str(qtdMoeda) + " COINS")
 	pass # Replace with function body.
 
 func _on_Player_alterou_qtd_bomba(variacao:int)->void:

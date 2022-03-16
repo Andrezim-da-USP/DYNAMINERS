@@ -56,7 +56,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Global="*res://Scripts (.gd)/Global.gd"
+SaveGame="*res://Save_Load_Data/SaveGame.gd"
 
 [debug]
 

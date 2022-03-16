@@ -2,7 +2,8 @@
 
 [ext_resource path="res://Scripts (.gd)/Portal.gd" type="Script" id=1]
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 10, 437.84 )
 
 [node name="Portal" type="Area2D"]
 collision_mask = 2
@@ -12,6 +13,7 @@ script = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+visible = false
 position = Vector2( -3, -1 )
 emission_shape = 1
 emission_sphere_radius = 10.0
