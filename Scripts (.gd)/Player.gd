@@ -7,20 +7,26 @@ var last_direction:Vector2
 var idle:bool = true
 var isAlive:bool = true
 var movingVertically:bool
+var movingHorizontally:bool
 var estaAtacando:bool = false
 var estaProtegidoDoGas:bool = false
+var layerIndex:int = 5
 #var bomba:Bomba
 
 const TIME_GAS_MASK:int = 15
 const BOMBA = preload("res://Scenes (.tscn)/Bomba.tscn")
 
 onready var timerMascara = $Timer_Mascara as Timer
-onready var label = $VBoxContainer/Label as Label
-onready var textureProgress = $TextureProgress as TextureProgress
-onready var animationFadeGasMask = $VBoxContainer/HBoxContainer/AnimationPlayer
-onready var hBoxContainerGasMask = $VBoxContainer/HBoxContainer
-onready var labelGasMask = $VBoxContainer/HBoxContainer/Label
-onready var damageAnimation = $DamageRect/AnimationPlayer
+onready var canvasLayer:CanvasLayer = $GUI as CanvasLayer
+onready var label:Label = $GUI/VBoxContainer/Label as Label
+onready var bombsLabel:Label = $GUI/VBoxContainer/Bombs as Label
+onready var vida:TextureProgress = $GUI/Vida as TextureProgress
+onready var vidaLabel:Label = $GUI/Vida/Label as Label
+onready var vidaAnim:AnimationPlayer = $GUI/Vida/AnimationPlayer as AnimationPlayer
+onready var animationFadeGasMask = $GUI/VBoxContainer/HBoxContainer/AnimationPlayer
+onready var hBoxContainerGasMask = $GUI/VBoxContainer/HBoxContainer
+onready var labelGasMask = $GUI/VBoxContainer/HBoxContainer/Label
+onready var damageAnimation = $GUI/DamageRect/AnimationPlayer
 onready var hitboxR = $HITBOX/RIGHT 
 onready var hitboxL = $HITBOX/LEFT 
 onready var hitboxU = $HITBOX/UP 
@@ -33,14 +39,15 @@ signal coletou_mascara_de_gas()
 signal acabou_mascara_de_gas()
 
 func _ready():
-	set_max_hp(50)
-	set_hp(20)
-	textureProgress.set_max(max_hp)
-	textureProgress.set_value(hp)
+	set_max_hp(Global.get_max_hp())
+	set_hp(Global.get_hp())
+	vida.set_max(Global.max_hp)
+	vida.set_value(Global.hp)
+	vidaLabel.set_text(str(Global.hp) + "/" + str(Global.max_hp))
+	bombsLabel.set_text("x" + str(qtdBomba) + " BOMBS")
 	
 func _physics_process(delta):
-	if !estaAtacando:
-		set_direction()
+	if !estaAtacando: set_direction()
 	movement(direction)
 	animation(direction, last_direction, idle)
 	put_bomb(self.global_position, last_direction)
@@ -48,25 +55,56 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity)
 	
 func set_direction() -> void:
-	direction.y = int(Input.is_action_pressed("ui_down"))-int(Input.is_action_pressed("ui_up"))
-	direction.x = int(Input.is_action_pressed("ui_right"))-int(Input.is_action_pressed("ui_left"))
-	
-	if direction.y != 0:
-		movingVertically = true
-	else:
-		movingVertically = false
+	if Input.is_action_just_pressed("ui_down"):
+		direction = Vector2.DOWN
+	elif Input.is_action_just_released("ui_down") and direction.x == 0:
+		direction = Vector2.ZERO
 		
+	if Input.is_action_just_pressed("ui_up"):
+		direction = Vector2.UP
+	elif Input.is_action_just_released("ui_up") and direction.x == 0:
+		direction = Vector2.ZERO
+		
+	if Input.is_action_just_pressed("ui_right"):
+		direction = Vector2.RIGHT
+	elif Input.is_action_just_released("ui_right") and direction.y == 0:
+		direction = Vector2.ZERO
+		
+	if Input.is_action_just_pressed("ui_left"):
+		direction = Vector2.LEFT
+	elif Input.is_action_just_released("ui_left") and direction.y == 0:
+		direction = Vector2.ZERO
+	
+#	direction.y = int(Input.is_action_pressed("ui_down"))-int(Input.is_action_pressed("ui_up"))
+#	direction.x = int(Input.is_action_pressed("ui_right"))-int(Input.is_action_pressed("ui_left"))
+#
+#	if direction.x != 0 and direction.y != 0:
+#		if last_direction == Vector2.LEFT or last_direction == Vector2.RIGHT:
+#			direction.x = 0
+#			movingVertically = true
+#		elif last_direction == Vector2.UP or last_direction == Vector2.DOWN:
+#			direction.y = 0
+#			movingHorizontally = true
+#
+#	if direction.y != 0:
+#		movingVertically = true
+#	else:
+#		movingVertically = false
+#
+#	if direction.x !=0:
+#		movingHorizontally = true
+#	else:
+#		movingHorizontally = false
+
 	if direction != Vector2.ZERO:
 		idle = false
 	elif direction == Vector2.ZERO:
 		idle = true
 		
-	if direction.x != 0 and direction.y != 0:
-		if movingVertically:
-			direction.x = 0
-		else:
-			direction.y = 0
-		pass	
+#	if movingVertically:
+#		if direction.x != 0 and direction.y != 0: direction.y = 0
+#	if movingHorizontally:
+#		if direction.x != 0 and direction.y != 0: direction.x = 0
 
 func movement(dir:Vector2) -> void:
 	if !idle and !estaAtacando and isAlive:
@@ -102,8 +140,9 @@ func animation(dir:Vector2, last_dir:Vector2, parado:bool) -> void:
 
 func put_bomb(pos: Vector2, dir: Vector2) -> void:
 	if Input.is_action_just_pressed("ui_accept") and qtdBomba  > 0 and isAlive:
-		var incremento:Vector2 = dir * 60
+		var incremento:Vector2 = dir * 70
 		var bombaInst = BOMBA.instance()
+		bombaInst.danoExtra = 500
 		get_parent().add_child(bombaInst)
 		bombaInst.global_position = pos + incremento
 		emit_signal("alterou_qtd_bomba",-1)
@@ -161,25 +200,37 @@ func death() -> void:
 			yield(anim,"animation_finished")
 			get_tree().reload_current_scene()
 	
-func _on_Player_vida_mudou(variacao) -> void:
-	set_hp(self.hp + variacao)
-	textureProgress.set_value(self.hp)
+func _on_Player_vida_mudou(variacao:int) -> void:
+#	var vida_texture:TextureProgress = get_parent().get_node("Camera/GUI/Vida")
+#	var damageAnimation:AnimationPlayer = get_parent().get_node("GUI/VBoxContainer/HBoxContainer/AnimationPlayer")
+	if Global.hp <= 0: return
+	Global.set_hp(Global.hp + variacao)
+	vida.set_value(Global.hp)
+	if Global.hp > 0:
+		vidaLabel.set_text(str(Global.hp) + "/" + str(Global.max_hp))
+	else: vidaLabel.set_text("0/" + str(Global.max_hp))
+	
 	if variacao < 0:
 		damageAnimation.play("Damage")
-		if hp <= 0:
+		if Global.hp <= 0:
 			self.death()
+	if variacao > 0:
+		vidaAnim.play("heal")
 	pass # Replace with function body.
 
 func _on_Player_coletou_moeda():
+#	var label_moeda:Label = get_parent().get_node("GUI/VBoxContainer/Label")
 	set_qtdMoeda(qtdMoeda+1)
-	label.text = "x" + str(qtdMoeda) + " COINS"
+	label.set_text("x" + str(qtdMoeda) + " COINS")
 	pass # Replace with function body.
 
-func _on_Player_alterou_qtd_bomba(variacao):
+func _on_Player_alterou_qtd_bomba(variacao:int)->void:
 	set_qtdBomba(qtdBomba+variacao)
+	bombsLabel.set_text("x" + str(qtdBomba) + " BOMBS")
 	pass # Replace with function body.
 
 func _on_Player_coletou_mascara_de_gas():
+#	var hBoxContainerGasMask:HBoxContainer = get_parent().get_node("Player/Camera2D/GUI")
 	estaProtegidoDoGas = true
 	timerMascara.start()
 	hBoxContainerGasMask.set_visible(true)

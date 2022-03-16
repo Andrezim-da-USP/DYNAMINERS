@@ -6,12 +6,13 @@ onready var sprite = get_node("Sprite")
 onready var collShape = get_node("CollisionShape2D")
 onready var textureProgress = get_node("TextureProgress")
 
-var vida:int = 10 setget set_vida, get_vida
+export(int) var vida:int = 10 setget set_vida, get_vida
 
 signal vida_mudou(variacao)
 
 func _ready():
-	textureProgress.value = get_vida()
+	textureProgress.set_max(get_vida())
+	textureProgress.set_value(get_vida())
 	
 func bloco_destruido() -> void:
 	self.queue_free()

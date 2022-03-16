@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scenes (.tscn)/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Tileset (.tres)/tile_set.tres" type="TileSet" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Scenes (.tscn)/Bloco_destrutivel_base.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes (.tscn)/Mascara_de_gas_.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes (.tscn)/PoisonGas.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes (.tscn)/Portal.tscn" type="PackedScene" id=8]
 
 [sub_resource type="Environment" id=1]
 background_mode = 4
@@ -33,6 +34,12 @@ position = Vector2( 212.868, 49.9467 )
 [node name="Vida_2" parent="." instance=ExtResource( 4 )]
 position = Vector2( 81.3173, 158.392 )
 
+[node name="Vida_3" parent="." instance=ExtResource( 4 )]
+position = Vector2( 120.375, -46.975 )
+
+[node name="Vida_4" parent="." instance=ExtResource( 4 )]
+position = Vector2( 34.7002, 58.8583 )
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 1 )
 
@@ -41,6 +48,7 @@ position = Vector2( -178, -196 )
 
 [node name="Bloco_destrutivel_base2" parent="." instance=ExtResource( 5 )]
 position = Vector2( 522.036, -311.966 )
+vida = 1000
 
 [node name="Bloco_destrutivel_base3" parent="." instance=ExtResource( 5 )]
 position = Vector2( 523.45, -237.426 )
@@ -55,6 +63,11 @@ position = Vector2( 345.167, 102.836 )
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 current = true
+zoom = Vector2( 1.5, 1.5 )
 
 [node name="PoisonGas" parent="." instance=ExtResource( 7 )]
 position = Vector2( 816.001, -282.843 )
+
+[node name="Portal" parent="." instance=ExtResource( 8 )]
+position = Vector2( 336.019, 249.183 )
+nextLevel = "res://Scenes (.tscn)/Mapa2.tscn"
