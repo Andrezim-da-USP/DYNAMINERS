@@ -13,7 +13,7 @@ radius = 30.453
 radius = 29.8546
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 23.2857, 30 )
+extents = Vector2( 22.2722, 26.0444 )
 
 [node name="Tiles" type="Node2D"]
 
@@ -53,6 +53,7 @@ shape = SubResource( 3 )
 
 [node name="Sprite4" type="Sprite" parent="."]
 position = Vector2( 210, 280 )
+scale = Vector2( 1.3, 1 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 210, 0, 70, 70 )
@@ -60,6 +61,7 @@ region_rect = Rect2( 210, 0, 70, 70 )
 [node name="StaticBody2D" type="StaticBody2D" parent="Sprite4"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite4/StaticBody2D"]
+position = Vector2( 0.944946, 0.944946 )
 shape = SubResource( 4 )
 
 [node name="Sprite5" type="Sprite" parent="."]
