@@ -41,6 +41,7 @@ signal coletou_mascara_de_gas()
 signal acabou_mascara_de_gas()
 
 func _ready():
+	var INCREMENT:float = 80
 	var save_file:File = File.new()
 	if not save_file.file_exists("res://Save_Load_Data/game_data.json"): return
 	save_file.open("res://Save_Load_Data/game_data.json", File.READ)
@@ -51,10 +52,20 @@ func _ready():
 		while save_file.get_position() < save_file.get_len():
 			var node_data:Dictionary = parse_json(save_file.get_line())
 			if node_data["filename"] == "res://Scenes (.tscn)/Player.tscn":
+				self.position = Vector2(
+					node_data["pos_x"] + INCREMENT,
+					node_data["pos_y"] 
+				)
 				set_max_hp(node_data["max_hp"])
 				set_hp(node_data["hp"])
 				set_qtdBomba(node_data["qtd_bomba"])
 				set_qtdMoeda(node_data["qtd_moeda"])
+				for i in get_tree().get_nodes_in_group("Camera"):
+					print(i.name)
+					if i.name == node_data["current_camera"]:
+						get_node("/root/Mapa/Cameras/" + i.name)._set_current(true)
+					else:
+						pass
 	save_file.close()
 	vida.set_max(get_max_hp())
 	vida.set_value(get_hp())
@@ -79,10 +90,21 @@ func save():
 		"max_hp" : max_hp,
 		"hp" : hp,
 		"qtd_bomba" : qtdBomba,
-		"qtd_moeda" : qtdMoeda
+		"qtd_moeda" : qtdMoeda,
+		"current_camera" : get_current_camera()
 	}
 	return data
-	
+
+func get_current_camera()->String:
+	var current_camera
+	var cameras:Array = get_tree().get_nodes_in_group("Camera")
+	print(cameras)
+	for j in cameras:
+		if j.is_current():
+			current_camera = j
+		else:
+			pass
+	return current_camera.name
 func set_direction() -> void:
 	if Input.is_action_just_pressed("ui_down"):
 		direction = Vector2.DOWN
@@ -228,7 +250,9 @@ func death() -> void:
 			anim.play("death.R")
 			yield(anim,"animation_finished")
 #			get_tree().reload_current_scene()
+#	SaveGame.load_game()
 	get_tree().reload_current_scene()
+	
 	
 func _on_Player_vida_mudou(variacao:int) -> void:
 #	var vida_texture:TextureProgress = get_parent().get_node("Camera/GUI/Vida")

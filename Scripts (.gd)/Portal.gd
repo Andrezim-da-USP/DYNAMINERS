@@ -18,4 +18,8 @@ func _on_Portal_body_entered(body:Player)->void:
 			next_camera = former_camera
 			former_camera = aux
 		else: 
-			return
+			former_camera._set_current(true)
+			var aux:Camera2D = former_camera
+			former_camera = next_camera
+			next_camera = aux
+			
